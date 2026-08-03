@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="az" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irregular Verbs Master - İngilis Dili Qaydasız Feillər Testi</title>
+
+  <!-- Favicon Links (Data URI + SVG fallback for 100% browser support) -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='28' fill='%236366f1'/%3E%3Cpath d='M56 12 L24 54 H48 L44 88 L76 46 H52 Z' fill='%23ffffff'/%3E%3C/svg%3E">
+  <link rel="shortcut icon" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+
+
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="İngilis dili irregular verbs (qaydasız feillər) üçün 5 fərqli sual növünə malik interaktiv və müasir test tətbiqi.">
+  <meta name="keywords"
+    content="irregular verbs, ingilis dili, qaydasız feillər, feil testi, english grammar, english test, v1 v2 v3, verb master">
+  <meta name="author" content="VerbMaster">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0b0f19">
+
+  <!-- Open Graph / Facebook Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Irregular Verbs Master - İngilis Dili Qaydasız Feillər Testi">
+  <meta property="og:description"
+    content="145+ qaydasız və qaydalı feili 5 fərqli sual növü, skor və streak sistemi ilə interaktiv şəkildə öyrənin.">
+  <meta property="og:image" content="favicon.svg">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Irregular Verbs Master - İngilis Dili Qaydasız Feillər Testi">
+  <meta name="twitter:description"
+    content="145+ qaydasız və qaydalı feili 5 fərqli sual növü, skor və streak sistemi ilə interaktiv şəkildə öyrənin.">
+  <meta name="twitter:image" content="favicon.svg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background Decorative Glows -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">Verb<span class="highlight">Master</span></span>
+      </div>
+      <div class="header-actions">
+        <!-- Custom UI Language Dropdown -->
+        <div class="custom-lang-dropdown" id="custom-lang-dropdown">
+          <button type="button" class="lang-trigger-btn" id="lang-trigger-btn" title="Dil dəyiş / Change language">
+            <span class="lang-flag-wrapper" id="current-lang-flag">
+              <svg class="flag-icon" viewBox="0 0 30 20" width="20" height="14">
+                <rect width="30" height="6.67" fill="#0092C7" />
+                <rect y="6.67" width="30" height="6.67" fill="#E00034" />
+                <rect y="13.33" width="30" height="6.67" fill="#009B00" />
+                <circle cx="13.5" cy="10" r="2.2" fill="#fff" />
+                <circle cx="14.2" cy="10" r="1.8" fill="#E00034" />
+                <polygon points="17,10 17.6,9.2 17.2,10 18,10.3 17.3,10.6 17.4,11.4 16.8,10.8 16.2,11.2 16.5,10.4"
+                  fill="#fff" />
+              </svg>
+            </span>
+            <span class="lang-code" id="current-lang-code">AZ</span>
+            <span class="lang-chevron">▼</span>
+          </button>
+          <div class="lang-menu glass-panel hidden" id="lang-menu">
+            <div class="lang-option active" data-lang="az">
+              <span class="lang-flag-wrapper">
+                <svg class="flag-icon" viewBox="0 0 30 20" width="20" height="14">
+                  <rect width="30" height="6.67" fill="#0092C7" />
+                  <rect y="6.67" width="30" height="6.67" fill="#E00034" />
+                  <rect y="13.33" width="30" height="6.67" fill="#009B00" />
+                  <circle cx="13.5" cy="10" r="2.2" fill="#fff" />
+                  <circle cx="14.2" cy="10" r="1.8" fill="#E00034" />
+                  <polygon points="17,10 17.6,9.2 17.2,10 18,10.3 17.3,10.6 17.4,11.4 16.8,10.8 16.2,11.2 16.5,10.4"
+                    fill="#fff" />
+                </svg>
+              </span>
+              <span class="lang-name">Azərbaycan</span>
+            </div>
+            <div class="lang-option" data-lang="en">
+              <span class="lang-flag-wrapper">
+                <svg class="flag-icon" viewBox="0 0 60 30" width="20" height="14">
+                  <clipPath id="uk1">
+                    <path d="M0,0 v30 h60 v-30 z" />
+                  </clipPath>
+                  <clipPath id="uk2">
+                    <path d="M30,15 L60,0 h-60 z L30,15 L0,30 h60 z" />
+                  </clipPath>
+                  <g clip-path="url(#uk1)">
+                    <path d="M0,0 v30 h60 v-30 z" fill="#012169" />
+                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" />
+                    <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk2)" stroke="#C8102E" stroke-width="4" />
+                    <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
+                    <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6" />
+                  </g>
+                </svg>
+              </span>
+              <span class="lang-name">English</span>
+            </div>
+          </div>
+        </div>
+
+        <button id="theme-toggle" class="icon-btn" title="Temanı dəyiş">
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- SCREEN 1: Home / Mode Selection -->
+    <section id="screen-home" class="screen active">
+      <div class="hero-card glass-panel">
+        <h1 class="hero-title" data-i18n="hero_title">İngilis Dili Feil Testi</h1>
+        <p class="hero-subtitle" data-i18n="hero_subtitle">145+ Qaydasız və Qaydalı feili 5 fərqli sual növü ilə
+          interaktiv şəkildə öyrənin və test edin.</p>
+
+        <!-- Mode Selection Options -->
+        <div class="mode-section">
+          <h2 class="section-title" data-i18n="section_title">Sual Sayını Seçin</h2>
+          <div class="mode-grid">
+            <button class="mode-card active" data-mode="10">
+              <span class="mode-num">10</span>
+              <span class="mode-label" data-i18n="mode_questions">Sual</span>
+              <span class="mode-badge" data-i18n="badge_fast">Çox tez</span>
+            </button>
+            <button class="mode-card" data-mode="20">
+              <span class="mode-num">20</span>
+              <span class="mode-label" data-i18n="mode_questions">Sual</span>
+              <span class="mode-badge" data-i18n="badge_std">Standart</span>
+            </button>
+            <button class="mode-card" data-mode="50">
+              <span class="mode-num">50</span>
+              <span class="mode-label" data-i18n="mode_questions">Sual</span>
+              <span class="mode-badge" data-i18n="badge_med">Orta</span>
+            </button>
+            <button class="mode-card" data-mode="100">
+              <span class="mode-num">100</span>
+              <span class="mode-label" data-i18n="mode_questions">Sual</span>
+              <span class="mode-badge" data-i18n="badge_deep">Dərin</span>
+            </button>
+            <button class="mode-card" data-mode="all">
+              <span class="mode-num">145</span>
+              <span class="mode-label" data-i18n="mode_all">Bütün Baza</span>
+              <span class="mode-badge" data-i18n="badge_full">Tam Siyahı</span>
+            </button>
+            <button class="mode-card mode-endless" data-mode="endless">
+              <span class="mode-num">♾️</span>
+              <span class="mode-label" data-i18n="mode_endless">Sonsuz Rejim</span>
+              <span class="mode-badge streak-badge" data-i18n="badge_until_wrong">Səhv edənədək</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Start Button -->
+        <button id="btn-start" class="btn btn-primary btn-lg">
+          <span data-i18n="btn_start">Testə Başla</span>
+          <span class="btn-arrow">→</span>
+        </button>
+
+        <!-- FAQ Button at the bottom -->
+        <button id="btn-faq-home" class="btn btn-secondary btn-faq-home">
+          <span data-i18n="btn_faq_home">❓ Sual Növləri və İzahlar</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: Quiz Engine Screen -->
+    <section id="screen-quiz" class="screen">
+      <!-- Quiz Header Controls -->
+      <div class="quiz-topbar glass-panel">
+        <div class="quiz-stats">
+          <div class="stat-item">
+            <span class="stat-label" data-i18n="stat_q">Sual</span>
+            <span id="quiz-progress-text" class="stat-value">1 / 10</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label" data-i18n="stat_score">Xal</span>
+            <span id="quiz-score" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label" data-i18n="stat_streak">Streak</span>
+            <span id="quiz-streak" class="stat-value streak-glow">🔥 0</span>
+          </div>
+        </div>
+        <button id="btn-quit" class="btn-text" data-i18n="btn_quit">Sonlandır ✕</button>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-bar-container">
+        <div id="quiz-progress-bar" class="progress-bar-fill"></div>
+      </div>
+
+      <!-- Question Card Container -->
+      <div id="question-card" class="question-card glass-panel">
+        <div class="question-type-tag">
+          <span id="q-type-icon">📝</span>
+          <span id="q-type-title">Növ 1: Formanı Yazın</span>
+        </div>
+
+        <!-- Question Body -->
+        <div id="question-body" class="question-body">
+          <!-- Dynamic Content Rendered via JS -->
+        </div>
+
+        <!-- Feedback Alert Container -->
+        <div id="feedback-alert" class="feedback-alert hidden"></div>
+
+        <!-- Action Button Container -->
+        <div class="quiz-actions">
+          <button id="btn-submit" class="btn btn-primary btn-block">
+            <span data-i18n="btn_submit">Təsdiqlə</span>
+          </button>
+          <button id="btn-next" class="btn btn-accent btn-block hidden">
+            <span data-i18n="btn_next">Növbəti Sual</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: Results Screen -->
+    <section id="screen-results" class="screen">
+      <div class="results-card glass-panel">
+        <div class="results-header">
+          <div class="trophy-icon">🏆</div>
+          <h2 class="results-title" data-i18n="res_title">Test Yekunlaşdı!</h2>
+          <p id="results-subtitle" class="results-subtitle" data-i18n="res_subtitle">Əla nəticə göstərdiniz!</p>
+        </div>
+
+        <!-- Summary Stats Grid -->
+        <div class="results-stats-grid">
+          <div class="res-stat-card">
+            <span class="res-stat-val" id="res-score">0</span>
+            <span class="res-stat-lbl" data-i18n="res_lbl_score">Ümumi Xal</span>
+          </div>
+          <div class="res-stat-card">
+            <span class="res-stat-val" id="res-accuracy">0%</span>
+            <span class="res-stat-lbl" data-i18n="res_lbl_accuracy">Dəqiqlik</span>
+          </div>
+          <div class="res-stat-card">
+            <span class="res-stat-val" id="res-correct">0</span>
+            <span class="res-stat-lbl" data-i18n="res_lbl_correct">Doğru</span>
+          </div>
+          <div class="res-stat-card">
+            <span class="res-stat-val" id="res-wrong">0</span>
+            <span class="res-stat-lbl" data-i18n="res_lbl_wrong">Səhv</span>
+          </div>
+          <div class="res-stat-card full-width">
+            <span class="res-stat-val" id="res-best-streak">🔥 0</span>
+            <span class="res-stat-lbl" data-i18n="res_lbl_streak">Maksimum Streak</span>
+          </div>
+        </div>
+
+        <!-- Error Review List Section -->
+        <div id="error-review-section" class="error-review-section hidden">
+          <h3 class="review-title" data-i18n="review_title">Səhv Edilmiş Feillər və İzahları</h3>
+          <div id="error-list" class="error-list">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Result Action Buttons -->
+        <div class="results-actions">
+          <button id="btn-restart" class="btn btn-primary">
+            <span data-i18n="btn_restart">Yenidən Başla</span>
+          </button>
+          <button id="btn-home" class="btn btn-secondary">
+            <span data-i18n="btn_home">Ana Menyu</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>Developed with <span class="heart-icon">❤️</span> by <strong>Kənan</strong></p>
+    </footer>
+
+  </div>
+
+  <!-- FAQ / Help Modal -->
+  <div id="modal-faq" class="modal-overlay hidden">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h2 class="modal-title" data-i18n="modal_title">❓ Sual Növləri haqqında İzah</h2>
+        <button id="btn-close-faq" class="icon-btn" title="Bağla">✕</button>
+      </div>
+      <div class="faq-content">
+        <div class="faq-item">
+          <div class="faq-item-header" data-i18n="faq_t1">✏️ Növ 1: Formanı Yazın</div>
+          <p data-i18n="faq_p1">Verilmiş feilin tələb olunan V1, V2 və ya V3 formasını klaviaturadan daxil edin.</p>
+          <div class="faq-example-badge" data-i18n="faq_ex1">Nümunə: "write" (V2) → <strong>wrote</strong></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-item-header" data-i18n="faq_t2">⚖️ Növ 2: Sıranın Doğruluğu (True/False)</div>
+          <p data-i18n="faq_p2">Feilin 3 forması verilir və sıranın tam doğru olub-olmaması soruşulur.</p>
+          <div class="faq-example-badge" data-i18n="faq_ex2">Nümunə: "go - went - gone" → <strong>Düzgündür
+              (True)</strong></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-item-header" data-i18n="faq_t3">🧩 Növ 3: Çatışmayan Formanı Yazın</div>
+          <p data-i18n="faq_p3">3 formadan 2-si verilir, çatışmayan 1 boşluğu daxil edirsiniz.</p>
+          <div class="faq-example-badge" data-i18n="faq_ex3">Nümunə: "go - ___ - gone" → <strong>went</strong></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-item-header" data-i18n="faq_t4">🎯 Növ 4: Formanı Təyin Etmək</div>
+          <p data-i18n="faq_p4">Sözün V1, V2 və ya V3 formasını təyin edin. Eyni formaya malik feillər üçün 1 və ya bir
+            neçə variant seçilməlidir.</p>
+          <div class="faq-example-badge" data-i18n="faq_ex4">Nümunə: "cut" → <strong>V1, V2, V3 (Hər üçü)</strong></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-item-header" data-i18n="faq_t5">🔀 Növ 5: Düzgün Sıraya Salın</div>
+          <p data-i18n="faq_p5">Qarışıq verilmiş 3 sözü klikləyərək və ya sürükləyib buraxaraq (Drag & Drop) düzgün
+            sıraya salın.</p>
+          <div class="faq-example-badge" data-i18n="faq_ex5">Nümunə: "went - gone - go" → <strong>go - went -
+              gone</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="app.js"></script>
+</body>
+
+</html>

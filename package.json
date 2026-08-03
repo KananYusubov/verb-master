@@ -1,0 +1,17 @@
+{
+  "name": "irregular-verbs-master",
+  "version": "1.0.0",
+  "description": "English Irregular Verbs Master Quiz Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "irregular-verbs",
+    "english-quiz",
+    "grammar-test"
+  ],
+  "author": "Kənan",
+  "license": "MIT"
+}
