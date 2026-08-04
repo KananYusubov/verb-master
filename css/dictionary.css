@@ -5,16 +5,23 @@
 .modal-dictionary-content {
   max-width: 780px;
   width: 95%;
+  height: 85vh;
   max-height: 85vh;
   display: flex;
   flex-direction: column;
 }
 
-.dict-header-tools {
-  margin-top: 14px;
+.dict-sticky-search-bar {
+  margin-top: 12px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.dict-scrollable-header {
+  margin-bottom: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .dict-search-wrapper {
@@ -86,20 +93,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 4px;
   padding: 0 4px;
   font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
 .dict-list-container {
-  margin-top: 14px;
+  margin-top: 4px;
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding-right: 4px;
   display: flex;
   flex-direction: column;
+}
+
+.dict-virtual-viewport {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
+  width: 100%;
 }
 
 /* Verb Item Card */
@@ -112,6 +126,8 @@
   flex-direction: column;
   gap: 8px;
   transition: all 0.2s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 138px;
 }
 
 .dict-verb-card:hover {

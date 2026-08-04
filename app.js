@@ -96,6 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove('quiz-mode-active');
     }
 
+    // Show/hide the fixed bottom start footer only on home screen
+    const homeFooter = document.getElementById('home-start-footer');
+    if (homeFooter) {
+      homeFooter.style.display = (targetScreen === screenHome) ? 'flex' : 'none';
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -230,6 +236,10 @@ document.addEventListener('DOMContentLoaded', () => {
       updateMistakesCountBadge();
     })
     .catch(err => console.error('Verbs fetch error:', err));
+
+  // Initialize home footer visibility (home screen is active on load)
+  const homeFooterInit = document.getElementById('home-start-footer');
+  if (homeFooterInit) homeFooterInit.style.display = 'flex';
 
   // Mode Selection Handler
   modeCards.forEach(card => {

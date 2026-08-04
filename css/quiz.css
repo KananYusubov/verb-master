@@ -8,6 +8,7 @@
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.25s ease, transform 0.25s ease;
+  will-change: opacity, transform;
 }
 
 .screen.active {
@@ -19,6 +20,40 @@
 /* Screen 1: Home */
 .hero-card {
   text-align: center;
+  margin-bottom: 80px !important;
+}
+
+.home-start-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  padding: 12px 16px max(14px, env(safe-area-inset-bottom));
+  background: rgba(9, 13, 22, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-color);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+[data-theme="light"] .home-start-footer {
+  background: rgba(241, 245, 249, 0.92);
+}
+
+.home-start-footer #btn-start {
+  width: 100%;
+  max-width: 448px;
+  box-shadow: 0 8px 24px -4px var(--accent-glow);
+}
+
+@media (max-height: 720px) {
+  .hero-card {
+    margin-bottom: 90px !important;
+  }
 }
 
 .hero-title {

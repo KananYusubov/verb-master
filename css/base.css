@@ -73,7 +73,9 @@ html, body {
 
 body.modal-open {
   overflow: hidden !important;
+  height: 100vh !important;
   touch-action: none;
+  overscroll-behavior: contain;
 }
 
 body {
@@ -97,10 +99,12 @@ html {
 .bg-glow {
   position: fixed;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(35px);
   z-index: -1;
   pointer-events: none;
   opacity: 0.35;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .bg-glow-1 {
@@ -131,8 +135,8 @@ html {
 /* Glassmorphism Panel */
 .glass-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-main);

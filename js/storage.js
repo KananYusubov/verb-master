@@ -2,6 +2,9 @@
    LocalStorage User Profile, History & Cumulative Stats Engine
    ========================================================================== */
 
+let cachedHistory = null;
+let cachedMistakesMap = null;
+
 function loadUserProfile() {
   try {
     const raw = localStorage.getItem(CONFIG.STORAGE_KEYS.PROFILE);
@@ -28,11 +31,14 @@ function updateHeaderNickname(nickname) {
 }
 
 function loadQuizHistory() {
+  if (cachedHistory !== null) return cachedHistory;
   try {
     const raw = localStorage.getItem(CONFIG.STORAGE_KEYS.HISTORY);
-    return raw ? JSON.parse(raw) : [];
+    cachedHistory = raw ? JSON.parse(raw) : [];
+    return cachedHistory;
   } catch (e) {
-    return [];
+    cachedHistory = [];
+    return cachedHistory;
   }
 }
 
@@ -43,6 +49,7 @@ function saveQuizHistoryItem(item) {
     if (history.length > CONFIG.MAX_HISTORY_ITEMS) {
       history = history.slice(0, CONFIG.MAX_HISTORY_ITEMS); // Enforce max limit
     }
+    cachedHistory = history;
     localStorage.setItem(CONFIG.STORAGE_KEYS.HISTORY, JSON.stringify(history));
   } catch (e) {
     console.error('Failed to save quiz history:', e);
@@ -51,6 +58,7 @@ function saveQuizHistoryItem(item) {
 
 function clearQuizHistory() {
   try {
+    cachedHistory = [];
     localStorage.removeItem(CONFIG.STORAGE_KEYS.HISTORY);
   } catch (e) {
     console.error('Failed to clear history:', e);
@@ -81,16 +89,20 @@ function calculateOverallStats(history) {
    ========================================================================== */
 
 function loadMistakesMap() {
+  if (cachedMistakesMap !== null) return cachedMistakesMap;
   try {
     const raw = localStorage.getItem(CONFIG.STORAGE_KEYS.MISTAKES);
-    return raw ? JSON.parse(raw) : {};
+    cachedMistakesMap = raw ? JSON.parse(raw) : {};
+    return cachedMistakesMap;
   } catch (e) {
-    return {};
+    cachedMistakesMap = {};
+    return cachedMistakesMap;
   }
 }
 
 function saveMistakesMap(map) {
   try {
+    cachedMistakesMap = map;
     localStorage.setItem(CONFIG.STORAGE_KEYS.MISTAKES, JSON.stringify(map));
   } catch (e) {
     console.error('Failed to save mistakes:', e);
@@ -138,6 +150,7 @@ function getMistakeList() {
 
 function clearMistakes() {
   try {
+    cachedMistakesMap = {};
     localStorage.removeItem(CONFIG.STORAGE_KEYS.MISTAKES);
   } catch (e) {
     console.error('Failed to clear mistakes:', e);

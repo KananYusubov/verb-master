@@ -183,17 +183,6 @@
           </div>
 
         </div>
-
-        <!-- Start Button -->
-        <button id="btn-start" class="btn btn-primary btn-lg">
-          <span data-i18n="btn_start">Testə Başla</span>
-          <span class="btn-arrow">→</span>
-        </button>
-
-        <!-- FAQ Button at the bottom -->
-        <button id="btn-faq-home" class="btn btn-secondary btn-faq-home">
-          <span data-i18n="btn_faq_home">❓ Sual Növləri və İzahlar</span>
-        </button>
       </div>
     </section>
 
@@ -607,26 +596,31 @@
         <button id="btn-close-dictionary" class="icon-btn" title="Bağla">✕</button>
       </div>
 
-      <div class="dict-header-tools">
+      <!-- Sticky Search Bar -->
+      <div class="dict-sticky-search-bar">
         <div class="dict-search-wrapper">
           <span class="dict-search-icon">🔍</span>
           <input type="text" id="dict-search-input" class="dict-search-input" placeholder="Feil (V1, V2, V3) və ya tərcümə axtar..." data-i18n-placeholder="dict_search_placeholder">
         </div>
-
-        <div class="dict-filter-pills">
-          <button class="dict-pill active" data-filter="all" data-i18n="dict_filter_all">Bütün Feillər</button>
-          <button class="dict-pill" data-filter="irregular" data-i18n="dict_filter_irregular">Qaydasız</button>
-          <button class="dict-pill" data-filter="regular" data-i18n="dict_filter_regular">Qaydalı</button>
-          <button class="dict-pill" data-filter="mistakes" data-i18n="dict_filter_mistakes">Səhvlərim</button>
-        </div>
-
-        <div class="dict-meta-bar">
-          <span id="dict-meta-count">Ümumi: <strong>145</strong> feil</span>
-        </div>
       </div>
 
+      <!-- Main Scrollable Container -->
       <div id="dict-list-container" class="dict-list-container">
-        <!-- Rendered dynamically via js/dictionary.js -->
+        <!-- Scrollable Header Tools (Filters & Count) -->
+        <div class="dict-scrollable-header">
+          <div class="dict-filter-pills">
+            <button class="dict-pill active" data-filter="all" data-i18n="dict_filter_all">Bütün Feillər</button>
+            <button class="dict-pill" data-filter="irregular" data-i18n="dict_filter_irregular">Qaydasız</button>
+            <button class="dict-pill" data-filter="regular" data-i18n="dict_filter_regular">Qaydalı</button>
+          </div>
+
+          <div class="dict-meta-bar">
+            <span id="dict-meta-count">Ümumi: <strong>145</strong> feil</span>
+          </div>
+        </div>
+
+        <!-- Virtual List Viewport (Rendered dynamically) -->
+        <div id="dict-virtual-viewport" class="dict-virtual-viewport"></div>
       </div>
     </div>
   </div>
@@ -650,6 +644,14 @@
         <button id="btn-share-scorecard" class="btn-scorecard-action btn-share-native" data-i18n="btn_share_image">📲 Paylaş</button>
       </div>
     </div>
+  </div>
+
+  <!-- Home Fixed Start Footer (viewport-level, outside all screens) -->
+  <div class="home-start-footer" id="home-start-footer">
+    <button id="btn-start" class="btn btn-primary btn-lg">
+      <span data-i18n="btn_start">Testə Başla</span>
+      <span class="btn-arrow">→</span>
+    </button>
   </div>
 
   <!-- Toast Container -->

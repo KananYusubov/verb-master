@@ -128,16 +128,35 @@ function renderAnalyticsModal() {
       mistakesListEl.innerHTML = `<div class="dict-empty-state"><div class="dict-empty-icon">🎉</div><p>${t('mistakes_empty_title')}</p></div>`;
     } else {
       mistakesListEl.innerHTML = mistakeList.map(item => {
-        const v1Str = (item.v1 || []).join(', ');
-        const v2Str = (item.v2 || []).join(', ');
-        const v3Str = (item.v3 || []).join(', ');
+        const typeTagClass = item.type === 'regular' ? 'tag-regular' : 'tag-irregular';
+        const typeTagText = item.type === 'regular' ? 'Regular' : 'Irregular';
+        const v1Val = (item.v1 || []).join(' / ');
+        const v2Val = (item.v2 || []).join(' / ');
+        const v3Val = (item.v3 || []).join(' / ');
+
         return `
-          <div class="mistake-card-item">
-            <div class="mistake-info-left">
-              <span class="mistake-verb-az">${item.meaning_az}</span>
-              <span class="mistake-forms-text">${v1Str} — ${v2Str} — ${v3Str}</span>
+          <div class="dict-verb-card">
+            <div class="dict-verb-main">
+              <span class="dict-verb-az">${item.meaning_az}</span>
+              <div class="dict-verb-badges">
+                <span class="dict-tag tag-mistake">⚠️ SƏHV (${item.count})</span>
+                <span class="dict-tag ${typeTagClass}">${typeTagText}</span>
+              </div>
             </div>
-            <span class="mistake-count-badge">⚠️ ${item.count} ${currentLang === 'az' ? 'Səhv' : 'Missed'}</span>
+            <div class="dict-forms-grid">
+              <div class="dict-form-box">
+                <span class="dict-form-lbl">V1 (BASE)</span>
+                <span class="dict-form-val">${v1Val}</span>
+              </div>
+              <div class="dict-form-box">
+                <span class="dict-form-lbl">V2 (PAST)</span>
+                <span class="dict-form-val">${v2Val}</span>
+              </div>
+              <div class="dict-form-box">
+                <span class="dict-form-lbl">V3 (PARTICIPLE)</span>
+                <span class="dict-form-val">${v3Val}</span>
+              </div>
+            </div>
           </div>
         `;
       }).join('');
@@ -147,46 +166,35 @@ function renderAnalyticsModal() {
 
 function initModalListeners(onHistoryCleared, onApplyLanguage, onToggleTheme) {
   // FAQ Modal
-  const btnFaqHome = document.getElementById('btn-faq-home');
   const btnFaqSettings = document.getElementById('btn-faq-settings');
   const btnCloseFaq = document.getElementById('btn-close-faq');
   const modalFaq = document.getElementById('modal-faq');
 
   if (modalFaq && btnCloseFaq) {
-    // Accordion toggle logic for FAQ question types
-    function initFaqAccordion() {
-      const triggers = modalFaq.querySelectorAll('.faq-acc-trigger');
-      triggers.forEach(trigger => {
-        trigger.addEventListener('click', () => {
-          const item = trigger.closest('.faq-acc-item');
-          const isOpen = item.classList.contains('open');
-          // Close all
-          modalFaq.querySelectorAll('.faq-acc-item').forEach(i => i.classList.remove('open'));
-          // Toggle clicked
-          if (!isOpen) item.classList.add('open');
-        });
+    // Accordion toggle logic for FAQ question types (bound once on init)
+    const triggers = modalFaq.querySelectorAll('.faq-acc-trigger');
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-acc-item');
+        const isOpen = item ? item.classList.contains('open') : false;
+        // Close all
+        modalFaq.querySelectorAll('.faq-acc-item').forEach(i => i.classList.remove('open'));
+        // Toggle clicked
+        if (!isOpen && item) item.classList.add('open');
       });
-    }
+    });
 
     const btnFaqToolbar = document.getElementById('btn-faq-toolbar');
 
-    if (btnFaqHome) {
-      btnFaqHome.addEventListener('click', () => {
-        openModal(modalFaq);
-        initFaqAccordion();
-      });
-    }
     if (btnFaqToolbar) {
       btnFaqToolbar.addEventListener('click', () => {
         openModal(modalFaq);
-        initFaqAccordion();
       });
     }
     if (btnFaqSettings) {
       btnFaqSettings.addEventListener('click', () => {
         closeModal(document.getElementById('modal-settings'));
         openModal(modalFaq);
-        initFaqAccordion();
       });
     }
     btnCloseFaq.addEventListener('click', () => closeModal(modalFaq));

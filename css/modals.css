@@ -10,13 +10,16 @@
   width: 100vw;
   height: 100vh;
   background: rgba(9, 13, 22, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 999;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 12px;
+  transform: translateZ(0);
+  will-change: opacity;
+  overscroll-behavior: contain;
 }
 
 .modal-overlay.hidden {
@@ -52,6 +55,7 @@
 /* Profile Modal Content Panels */
 .profile-content {
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   max-height: 75vh;
   padding-right: 4px;
   display: flex;
@@ -279,6 +283,17 @@
   align-items: center;
   margin-bottom: 14px;
   gap: 10px;
+}
+
+.mistakes-tab-header #btn-start-mistakes-from-modal {
+  width: auto;
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
 }
 
 .mistakes-summary {

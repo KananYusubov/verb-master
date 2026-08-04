@@ -3,37 +3,42 @@
    ========================================================================== */
 
 let dictVerbsData = [];
-let dictCurrentFilter = 'all'; // 'all', 'irregular', 'regular', 'mistakes'
+let dictCurrentFilter = 'all'; // 'all', 'irregular', 'regular'
+
+function debounce(func, wait = 150) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
 
 function initDictionary(verbs) {
   dictVerbsData = verbs || [];
 }
 
-function renderDictionaryList() {
+function renderDictionaryList(resetScroll = false) {
   const container = document.getElementById('dict-list-container');
+  const viewport = document.getElementById('dict-virtual-viewport');
   const searchInput = document.getElementById('dict-search-input');
   const metaCountEl = document.getElementById('dict-meta-count');
 
-  if (!container) return;
+  if (!container || !viewport) return;
 
   const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
   const mistakesMap = typeof loadMistakesMap === 'function' ? loadMistakesMap() : {};
 
   const filtered = dictVerbsData.filter(verb => {
+    // Category Filter
+    if (dictCurrentFilter === 'irregular' && verb.type !== 'irregular') return false;
+    if (dictCurrentFilter === 'regular' && verb.type !== 'regular') return false;
+
+    // Query Filter
+    if (!query) return true;
     const v1Str = (verb.v1 || []).join(', ').toLowerCase();
     const v2Str = (verb.v2 || []).join(', ').toLowerCase();
     const v3Str = (verb.v3 || []).join(', ').toLowerCase();
     const azStr = (verb.meaning_az || '').toLowerCase();
-    const v1Key = (verb.v1 && verb.v1[0]) ? verb.v1[0].toLowerCase() : '';
-    const isMistake = Boolean(mistakesMap[v1Key]);
-
-    // Category Filter
-    if (dictCurrentFilter === 'irregular' && verb.type !== 'irregular') return false;
-    if (dictCurrentFilter === 'regular' && verb.type !== 'regular') return false;
-    if (dictCurrentFilter === 'mistakes' && !isMistake) return false;
-
-    // Query Filter
-    if (!query) return true;
     return v1Str.includes(query) || v2Str.includes(query) || v3Str.includes(query) || azStr.includes(query);
   });
 
@@ -41,8 +46,12 @@ function renderDictionaryList() {
     metaCountEl.innerHTML = t('dict_count_info', filtered.length);
   }
 
+  if (resetScroll && container) {
+    container.scrollTop = 0;
+  }
+
   if (filtered.length === 0) {
-    container.innerHTML = `
+    viewport.innerHTML = `
       <div class="dict-empty-state">
         <div class="dict-empty-icon">🔍</div>
         <p>${typeof t === 'function' ? t('dict_no_results') : 'Axtarışa uyğun feil tapılmadı.'}</p>
@@ -51,7 +60,7 @@ function renderDictionaryList() {
     return;
   }
 
-  container.innerHTML = filtered.map(verb => {
+  viewport.innerHTML = filtered.map(verb => {
     const v1Key = (verb.v1 && verb.v1[0]) ? verb.v1[0].toLowerCase() : '';
     const mistakeEntry = mistakesMap[v1Key];
     const typeTagClass = verb.type === 'regular' ? 'tag-regular' : 'tag-irregular';
@@ -91,8 +100,10 @@ function renderDictionaryList() {
 
 function setupDictionaryEvents() {
   const searchInput = document.getElementById('dict-search-input');
+
   if (searchInput) {
-    searchInput.addEventListener('input', () => renderDictionaryList());
+    const debouncedRender = debounce(() => renderDictionaryList(true), 150);
+    searchInput.addEventListener('input', debouncedRender);
   }
 
   const pills = document.querySelectorAll('.dict-pill');
@@ -101,7 +112,7 @@ function setupDictionaryEvents() {
       pills.forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
       dictCurrentFilter = pill.getAttribute('data-filter') || 'all';
-      renderDictionaryList();
+      renderDictionaryList(true);
     });
   });
 }
