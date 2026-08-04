@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Agent Memory & Project Log
+PROJECT_STATE.md
+.agent_notes.md
+
+# Environment & OS files
+.env
+.DS_Store
+Thumbs.db
+
+# IDE & Tooling folders
+.vscode/
+.idea/
+.gemini/

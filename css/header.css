@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Header Component & Toolbar Styles
+   ========================================================================== */
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 14px;
+  padding: 4px 2px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.header-left-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.header-right-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  transition: opacity 0.2s ease;
+}
+
+body.quiz-mode-active .header-right-group {
+  display: none !important;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+.logo-icon {
+  font-size: 1.25rem;
+}
+
+.highlight {
+  color: var(--accent-primary);
+}
+
+/* Toolbar Button Styling */
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* quiz-mode-active hides .header-right-group directly (see above) */
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 0 12px;
+  height: 38px;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.toolbar-btn:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+}
+
+.toolbar-btn:active {
+  transform: scale(0.96);
+}
+
+.btn-icon {
+  font-size: 0.95rem;
+}
+
+.profile-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}
+
+/* Standard Icon Button */
+.icon-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  transition: all var(--transition-fast);
+}
+
+.icon-btn:hover {
+  border-color: var(--accent-primary);
+  transform: scale(1.05);
+}
+
+.icon-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 560px) {
+  .toolbar-btn .btn-label {
+    display: none;
+  }
+  .toolbar-btn {
+    padding: 0 10px;
+  }
+}

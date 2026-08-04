@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Verb Dictionary & Live Search Module
+   ========================================================================== */
+
+let dictVerbsData = [];
+let dictCurrentFilter = 'all'; // 'all', 'irregular', 'regular', 'mistakes'
+
+function initDictionary(verbs) {
+  dictVerbsData = verbs || [];
+}
+
+function renderDictionaryList() {
+  const container = document.getElementById('dict-list-container');
+  const searchInput = document.getElementById('dict-search-input');
+  const metaCountEl = document.getElementById('dict-meta-count');
+
+  if (!container) return;
+
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+  const mistakesMap = typeof loadMistakesMap === 'function' ? loadMistakesMap() : {};
+
+  const filtered = dictVerbsData.filter(verb => {
+    const v1Str = (verb.v1 || []).join(', ').toLowerCase();
+    const v2Str = (verb.v2 || []).join(', ').toLowerCase();
+    const v3Str = (verb.v3 || []).join(', ').toLowerCase();
+    const azStr = (verb.meaning_az || '').toLowerCase();
+    const v1Key = (verb.v1 && verb.v1[0]) ? verb.v1[0].toLowerCase() : '';
+    const isMistake = Boolean(mistakesMap[v1Key]);
+
+    // Category Filter
+    if (dictCurrentFilter === 'irregular' && verb.type !== 'irregular') return false;
+    if (dictCurrentFilter === 'regular' && verb.type !== 'regular') return false;
+    if (dictCurrentFilter === 'mistakes' && !isMistake) return false;
+
+    // Query Filter
+    if (!query) return true;
+    return v1Str.includes(query) || v2Str.includes(query) || v3Str.includes(query) || azStr.includes(query);
+  });
+
+  if (metaCountEl && typeof t === 'function') {
+    metaCountEl.innerHTML = t('dict_count_info', filtered.length);
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="dict-empty-state">
+        <div class="dict-empty-icon">🔍</div>
+        <p>${typeof t === 'function' ? t('dict_no_results') : 'Axtarışa uyğun feil tapılmadı.'}</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(verb => {
+    const v1Key = (verb.v1 && verb.v1[0]) ? verb.v1[0].toLowerCase() : '';
+    const mistakeEntry = mistakesMap[v1Key];
+    const typeTagClass = verb.type === 'regular' ? 'tag-regular' : 'tag-irregular';
+    const typeTagText = verb.type === 'regular' ? 'Regular' : 'Irregular';
+
+    const v1Val = (verb.v1 || []).join(' / ');
+    const v2Val = (verb.v2 || []).join(' / ');
+    const v3Val = (verb.v3 || []).join(' / ');
+
+    return `
+      <div class="dict-verb-card">
+        <div class="dict-verb-main">
+          <span class="dict-verb-az">${verb.meaning_az}</span>
+          <div class="dict-verb-badges">
+            ${mistakeEntry ? `<span class="dict-tag tag-mistake">⚠️ Səhv (${mistakeEntry.count})</span>` : ''}
+            <span class="dict-tag ${typeTagClass}">${typeTagText}</span>
+          </div>
+        </div>
+        <div class="dict-forms-grid">
+          <div class="dict-form-box">
+            <span class="dict-form-lbl">V1 (Base)</span>
+            <span class="dict-form-val">${v1Val}</span>
+          </div>
+          <div class="dict-form-box">
+            <span class="dict-form-lbl">V2 (Past)</span>
+            <span class="dict-form-val">${v2Val}</span>
+          </div>
+          <div class="dict-form-box">
+            <span class="dict-form-lbl">V3 (Participle)</span>
+            <span class="dict-form-val">${v3Val}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function setupDictionaryEvents() {
+  const searchInput = document.getElementById('dict-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => renderDictionaryList());
+  }
+
+  const pills = document.querySelectorAll('.dict-pill');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      dictCurrentFilter = pill.getAttribute('data-filter') || 'all';
+      renderDictionaryList();
+    });
+  });
+}
