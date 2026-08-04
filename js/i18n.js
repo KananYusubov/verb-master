@@ -36,10 +36,11 @@ const translations = {
     res_lbl_accuracy: "Dəqiqlik",
     res_lbl_correct: "Doğru",
     res_lbl_wrong: "Səhv",
+    res_lbl_correct_wrong: "Doğru / Səhv",
     res_lbl_streak: "Maksimum Streak",
     review_title: "Səhv Edilmiş Feillər və İzahları",
     modal_title: "❓ Sual Növləri haqqında İzah",
-    
+
     // Profile & History Keys
     profile_modal_title: "👤 Profil və Statistika",
     nickname_label: "İstifadəçi Ləqəbi (Nickname)",
@@ -56,26 +57,26 @@ const translations = {
     last_quiz_title: "Son Kviziniz:",
     tab_profile: "👤 Profil",
     tab_analytics: "📊 Analitika & Tarixçə",
-    
+
     q1_title: "Növ 1: Formanı Yazın",
     q1_prompt: (word, label) => `"<strong>${word}</strong>" feilinin <u>${label}</u> formasını daxil edin:`,
     q1_placeholder: "Cavabınızı yazın...",
-    
+
     q2_title: "Növ 2: Sıranın Doğruluğu",
     q2_prompt: "Aşağıdakı feil sırası tamamilə düzgündür?",
     q2_true: "Düzgündür (True)",
     q2_false: "Səhvdir (False)",
-    
+
     q3_title: "Növ 3: Çatışmayan Formanı Yazın",
     q3_prompt: "Boş olan həlqəni doldurun:",
     q3_placeholder: "Çatışmayan formanı yazın...",
-    
+
     q4_title: "Növ 4: Formanı Təyin Etmək",
     q4_prompt: (word) => `"<strong>${word}</strong>" sözü hansı formada ola bilər? <em>(Bir və ya bir neçə seçin)</em>`,
-    
+
     q5_title: "Növ 5: Düzgün Sıraya Salın",
     q5_prompt: "Feilin 3 formasını sırası ilə (V1 → V2 → V3) düzün:",
-    
+
     fb_correct: (pts) => `✨ Tamamilə Düzgündür! (+${pts} Xal)`,
     fb_wrong: (ans) => `❌ Səhvdir! <br/><strong>Düzgün cavab:</strong> ${ans}`,
 
@@ -130,12 +131,25 @@ const translations = {
     dict_filter_mistakes: "Səhvlərim",
     dict_no_results: "Axtarışa uyğun heç bir feil tapılmadı.",
     dict_count_info: (count) => `Ümumi: <strong>${count}</strong> feil`,
-    btn_export_scorecard: "📷 Şəkli İxrac Et",
-    scorecard_modal_title: "📷 Nəticə Kartı İxracı",
+    btn_export_scorecard: "📷 Nəticəni Paylaş",
+    btn_challenge_friend: "🥊 Dostunu Çağır",
+    scorecard_modal_title: "📷 Nəticə Kartını Paylaş",
     btn_download_image: "💾 Yüklə (.png)",
     btn_share_image: "📲 Paylaş",
     mistakes_empty_title: "Əla! Səhv edilmiş feiliniz yoxdur 🎉",
-    mistakes_empty_desc: "Kviz zamanı edəcəyiniz səhvlər avtomatik bura toplanacaq."
+    mistakes_empty_desc: "Kviz zamanı edəcəyiniz səhvlər avtomatik bura toplanacaq.",
+
+    // JSON Backup, Timer & Challenge Keys
+    timer_setting_label: "Time Attack Vaxtı",
+    backup_setting_label: "Məlumatların İdxalı / İxracı (JSON)",
+    btn_export_backup: "💾 İxrac Et",
+    btn_import_backup: "📂 İdxal Et",
+    toast_backup_exported: "Məlumatlar .json faylı kimi ixrac olundu!",
+    toast_backup_imported: "Məlumatlar uğurla bərpa olundu!",
+    toast_backup_invalid: "Xəta: Keçərsiz backup faylı!",
+    toast_challenge_copied: "Dostunu çağırmaq üçün mətn kopyalandı!",
+    challenge_text_timeattack: (sec, correct) => `Mən VerbMaster-də ${sec} saniyədə ${correct} düzgün cavab verdim! Sən məni keçə bilərsən?`,
+    challenge_text_general: (correct) => `Mən VerbMaster-də ${correct} düzgün cavab verdim! Sən məni keçə bilərsən?`
   },
   en: {
     hero_title: "English Verb Master",
@@ -168,10 +182,11 @@ const translations = {
     res_lbl_accuracy: "Accuracy",
     res_lbl_correct: "Correct",
     res_lbl_wrong: "Incorrect",
+    res_lbl_correct_wrong: "Correct / Incorrect",
     res_lbl_streak: "Max Streak",
     review_title: "Incorrect Verbs & Review",
     modal_title: "❓ Question Types Guide",
-    
+
     // Profile & History Keys
     profile_modal_title: "👤 Profile & Statistics",
     nickname_label: "User Nickname",
@@ -188,26 +203,26 @@ const translations = {
     last_quiz_title: "Last Quiz:",
     tab_profile: "👤 Profile",
     tab_analytics: "📊 Analytics & History",
-    
+
     q1_title: "Type 1: Type the Form",
     q1_prompt: (word, label) => `Type the <u>${label}</u> form of "<strong>${word}</strong>":`,
     q1_placeholder: "Type your answer...",
-    
+
     q2_title: "Type 2: Check Sequence",
     q2_prompt: "Is the following verb sequence completely correct?",
     q2_true: "Correct (True)",
     q2_false: "Incorrect (False)",
-    
+
     q3_title: "Type 3: Fill Missing Form",
     q3_prompt: "Fill in the missing form:",
     q3_placeholder: "Type missing form...",
-    
+
     q4_title: "Type 4: Identify Form",
     q4_prompt: (word) => `Which form(s) can "<strong>${word}</strong>" be? <em>(Select one or more)</em>`,
-    
+
     q5_title: "Type 5: Reorder 3 Forms",
     q5_prompt: "Order the 3 verb forms correctly (V1 → V2 → V3):",
-    
+
     fb_correct: (pts) => `✨ Correct! (+${pts} Pts)`,
     fb_wrong: (ans) => `❌ Incorrect! <br/><strong>Correct answer:</strong> ${ans}`,
 
@@ -262,12 +277,25 @@ const translations = {
     dict_filter_mistakes: "My Mistakes",
     dict_no_results: "No matching verbs found.",
     dict_count_info: (count) => `Total: <strong>${count}</strong> verbs`,
-    btn_export_scorecard: "📷 Export Score Card",
-    scorecard_modal_title: "📷 Score Card Export",
+    btn_export_scorecard: "📷 Share Score",
+    btn_challenge_friend: "🥊 Challenge Friend",
+    scorecard_modal_title: "📷 Share Score Card",
     btn_download_image: "💾 Download (.png)",
     btn_share_image: "📲 Share",
     mistakes_empty_title: "Awesome! No mistake verbs recorded 🎉",
-    mistakes_empty_desc: "Verbs missed during quizzes will automatically be collected here."
+    mistakes_empty_desc: "Verbs missed during quizzes will automatically be collected here.",
+
+    // JSON Backup, Timer & Challenge Keys
+    timer_setting_label: "Time Attack Duration",
+    backup_setting_label: "Data Backup & Restore (JSON)",
+    btn_export_backup: "💾 Export Data",
+    btn_import_backup: "📂 Import Data",
+    toast_backup_exported: "Data exported as .json file!",
+    toast_backup_imported: "Data successfully restored!",
+    toast_backup_invalid: "Error: Invalid backup file!",
+    toast_challenge_copied: "Challenge message copied to clipboard!",
+    challenge_text_timeattack: (sec, correct) => `I answered ${correct} questions correctly in ${sec} seconds on VerbMaster! Can you beat me? https://kananyusubov.github.io/verb-master/`,
+    challenge_text_general: (correct) => `I answered ${correct} questions correctly on VerbMaster! Can you beat me? https://kananyusubov.github.io/verb-master/`
   }
 };
 

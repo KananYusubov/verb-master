@@ -251,6 +251,15 @@ function initModalListeners(onHistoryCleared, onApplyLanguage, onToggleTheme) {
           b.classList.remove('active');
         }
       });
+      // Sync active timer duration button in settings
+      const curTimer = typeof getTimeAttackDuration === 'function' ? getTimeAttackDuration() : 60;
+      document.querySelectorAll('.timer-select-btn').forEach(b => {
+        if (parseInt(b.getAttribute('data-timer'), 10) === curTimer) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
       openModal(modalSettings);
     });
     btnCloseSettings.addEventListener('click', () => closeModal(modalSettings));
@@ -291,6 +300,78 @@ function initModalListeners(onHistoryCleared, onApplyLanguage, onToggleTheme) {
       if (typeof onApplyLanguage === 'function') onApplyLanguage(lang);
     });
   });
+
+  // Settings Timer Controls
+  const timerSelectBtns = document.querySelectorAll('.timer-select-btn');
+  timerSelectBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      timerSelectBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const sec = parseInt(btn.getAttribute('data-timer'), 10);
+      if (typeof setTimeAttackDuration === 'function') setTimeAttackDuration(sec);
+      if (typeof window.updateTimeAttackBadge === 'function') window.updateTimeAttackBadge();
+    });
+  });
+
+  // JSON Data Backup & Import Controls
+  const btnExportBackup = document.getElementById('btn-export-backup');
+  const btnImportBackup = document.getElementById('btn-import-backup');
+  const inputImportBackup = document.getElementById('input-import-backup');
+
+  if (btnExportBackup) {
+    btnExportBackup.addEventListener('click', () => {
+      if (typeof exportAppDataAsJSON === 'function' && exportAppDataAsJSON()) {
+        showToast(t('toast_backup_exported'), 'success');
+      } else {
+        showToast(t('toast_backup_invalid'), 'error');
+      }
+    });
+  }
+
+  if (btnImportBackup && inputImportBackup) {
+    btnImportBackup.addEventListener('click', () => {
+      inputImportBackup.click();
+    });
+
+    inputImportBackup.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const content = evt.target.result;
+        if (typeof importAppDataFromJSON === 'function' && importAppDataFromJSON(content)) {
+          showToast(t('toast_backup_imported'), 'success');
+
+          // Refresh UI state
+          const importedLang = localStorage.getItem(CONFIG.STORAGE_KEYS.LANG) || 'az';
+          const importedTheme = localStorage.getItem(CONFIG.STORAGE_KEYS.THEME) || 'dark';
+
+          if (typeof onApplyLanguage === 'function') onApplyLanguage(importedLang);
+          if (typeof onToggleTheme === 'function') onToggleTheme(importedTheme);
+          if (typeof renderProfileModal === 'function') renderProfileModal();
+          if (typeof window.updateTimeAttackBadge === 'function') window.updateTimeAttackBadge();
+          if (typeof onHistoryCleared === 'function') onHistoryCleared();
+
+          const nickname = document.getElementById('header-user-nickname');
+          if (nickname && typeof loadUserProfile === 'function') {
+            nickname.textContent = loadUserProfile().nickname;
+          }
+
+          closeModal(document.getElementById('modal-profile'));
+          closeModal(modalSettings);
+        } else {
+          showToast(t('toast_backup_invalid'), 'error');
+        }
+        inputImportBackup.value = '';
+      };
+      reader.onerror = () => {
+        showToast(t('toast_backup_invalid'), 'error');
+        inputImportBackup.value = '';
+      };
+      reader.readAsText(file);
+    });
+  }
 
   // Analytics & Mistakes Modal
   const btnAnalytics = document.getElementById('btn-analytics');

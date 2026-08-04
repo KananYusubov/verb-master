@@ -10,7 +10,8 @@ const CONFIG = {
     HISTORY: 'verb_master_quiz_history',
     THEME: 'verb_master_theme',
     LANG: 'verb_master_lang',
-    MISTAKES: 'verb_master_mistakes'
+    MISTAKES: 'verb_master_mistakes',
+    TIMER_DURATION: 'verb_master_timer_duration'
   },
   DEFAULT_NICKNAME: 'Anonim'
 };

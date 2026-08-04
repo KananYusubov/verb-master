@@ -14,10 +14,21 @@ function getRandomDistractorForm(correctForm) {
   return correctForm + randomSuffix;
 }
 
-function generateQuestion(verbsData, qPrompt, qBody, onSubmitAnswer, setSubmitDisabled) {
+function generateQuestion(verbsData, qPrompt, qBody, onSubmitAnswer, setSubmitDisabled, recentTypesHistory = []) {
   const verb = getRandomVerb(verbsData);
   if (!verb) return null;
-  const typeNum = Math.floor(Math.random() * 5) + 1;
+
+  let candidateTypes = [1, 2, 3, 4, 5];
+  if (Array.isArray(recentTypesHistory) && recentTypesHistory.length >= 2) {
+    const len = recentTypesHistory.length;
+    const last1 = recentTypesHistory[len - 1];
+    const last2 = recentTypesHistory[len - 2];
+    if (last1 === last2) {
+      candidateTypes = candidateTypes.filter(t => t !== last1);
+    }
+  }
+
+  const typeNum = candidateTypes[Math.floor(Math.random() * candidateTypes.length)];
 
   switch (typeNum) {
     case 1: return generateType1(verb, qPrompt, qBody, onSubmitAnswer, setSubmitDisabled);
@@ -36,12 +47,24 @@ function generateType1(verb, qPrompt, qBody, onSubmitAnswer, setSubmitDisabled) 
   const formLabels = { v1: 'V1 (Infinitive)', v2: 'V2 (Past Simple)', v3: 'V3 (Past Participle)' };
   const correctAnswers = verb[targetFormKey];
 
+  // Determine display prompt word to prevent giving away V1 when asking for V1
+  let promptWord = verb.v1[0];
+  if (targetFormKey === 'v1') {
+    const v2Candidate = verb.v2 && verb.v2[0] ? verb.v2[0] : '';
+    const v3Candidate = verb.v3 && verb.v3[0] ? verb.v3[0] : '';
+    if (v2Candidate && v2Candidate.toLowerCase() !== verb.v1[0].toLowerCase()) {
+      promptWord = v2Candidate;
+    } else if (v3Candidate && v3Candidate.toLowerCase() !== verb.v1[0].toLowerCase()) {
+      promptWord = v3Candidate;
+    }
+  }
+
   return {
     typeNum: 1,
     type: 'Formanı Yazın',
     verb: verb,
     render: () => {
-      if (qPrompt) qPrompt.innerHTML = t('q1_prompt', verb.v1[0], formLabels[targetFormKey]);
+      if (qPrompt) qPrompt.innerHTML = t('q1_prompt', promptWord, formLabels[targetFormKey]);
       if (qBody) {
         qBody.innerHTML = `
           <input type="text" id="type1-input" class="input-field" placeholder="${t('q1_placeholder')}" autocomplete="off" autocorrect="off" capitalize="off" />
@@ -58,6 +81,9 @@ function generateType1(verb, qPrompt, qBody, onSubmitAnswer, setSubmitDisabled) 
           });
           inp.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
               if (inp.value.trim().length > 0 && typeof onSubmitAnswer === 'function') {
                 onSubmitAnswer();
               }
@@ -166,6 +192,9 @@ function generateType3(verb, qPrompt, qBody, onSubmitAnswer, setSubmitDisabled) 
           });
           inp.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
               if (inp.value.trim().length > 0 && typeof onSubmitAnswer === 'function') {
                 onSubmitAnswer();
               }

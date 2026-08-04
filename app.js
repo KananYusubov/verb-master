@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let quizVerbsPool = [];
   let timerInterval = null;
   let timeRemaining = 60;
+  let recentTypesHistory = [];
+  let lastSubmitTime = 0;
 
   // DOM Elements
   const customLangDropdown = document.getElementById('custom-lang-dropdown');
@@ -60,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resAccuracy = document.getElementById('res-accuracy');
   const resCorrect = document.getElementById('res-correct');
   const resWrong = document.getElementById('res-wrong');
+  const resCorrectWrong = document.getElementById('res-correct_wrong');
   const resBestStreak = document.getElementById('res-best-streak');
   const errorReviewSection = document.getElementById('error-review-section');
   const errorList = document.getElementById('error-list');
@@ -72,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const EN_FLAG_SVG = `<svg class="flag-icon" viewBox="0 0 60 30" width="20" height="14"><clipPath id="uk1"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="uk2"><path d="M30,15 L60,0 h-60 z L30,15 L0,30 h60 z"/></clipPath><g clip-path="url(#uk1)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk2)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>`;
 
   // Dynamic Mode Label Resolver
-  window.formatHistoryModeLabel = function(item) {
+  window.formatHistoryModeLabel = function (item) {
     if (!item) return '';
     const raw = String(item.modeKey || item.mode || '').toLowerCase().trim();
     if (raw.includes('mistakes') || raw.includes('səhv')) return t('mode_mistakes');
@@ -151,6 +154,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  window.updateTimeAttackBadge = function () {
+    const card = document.querySelector('.mode-timeattack-card');
+    if (!card) return;
+    const numEl = card.querySelector('.mode-num');
+    const badgeEl = card.querySelector('.mode-badge');
+    const duration = typeof getTimeAttackDuration === 'function' ? getTimeAttackDuration() : 60;
+    if (numEl) numEl.textContent = `${duration}s`;
+    if (badgeEl) badgeEl.textContent = currentLang === 'az' ? `${duration} Saniyə` : `${duration} Seconds`;
+  };
+
   function applyLanguage(lang) {
     if (typeof setLanguage === 'function') setLanguage(lang);
     currentLang = lang;
@@ -170,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (qTypeTitle) qTypeTitle.textContent = t(`q${currentQuestion.typeNum}_title`);
     }
 
+    window.updateTimeAttackBadge();
     renderHomeLastQuizBanner();
     if (typeof renderProfileModal === 'function') renderProfileModal();
     if (typeof renderDictionaryList === 'function') renderDictionaryList();
@@ -254,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Countdown Timer Engine for Time Attack
   function startTimer() {
     stopTimer();
-    timeRemaining = CONFIG.TIME_ATTACK_DURATION || 60;
+    timeRemaining = typeof getTimeAttackDuration === 'function' ? getTimeAttackDuration() : (CONFIG.TIME_ATTACK_DURATION || 60);
     if (quizTimerEl) quizTimerEl.classList.remove('hidden');
     updateTimerUI();
     timerInterval = setInterval(() => {
@@ -331,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
       correctCount = 0;
       wrongCount = 0;
       errorReviewList = [];
+      recentTypesHistory = [];
 
       switchScreen(screenQuiz);
       loadNextQuestion();
@@ -408,7 +423,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setSubmitDisabled(true);
 
     const activePool = (quizVerbsPool && quizVerbsPool.length > 0) ? quizVerbsPool : verbsData;
-    currentQuestion = generateQuestion(activePool, qPrompt, qBody, submitAnswer, setSubmitDisabled);
+    currentQuestion = generateQuestion(activePool, qPrompt, qBody, submitAnswer, setSubmitDisabled, recentTypesHistory);
+    if (currentQuestion && currentQuestion.typeNum) {
+      recentTypesHistory.push(currentQuestion.typeNum);
+      if (recentTypesHistory.length > 5) recentTypesHistory.shift();
+    }
     updateHeaderStats();
 
     if (currentQuestion && qTypeTitle) {
@@ -429,6 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function submitAnswer() {
     if (isAnswerSubmitted || !currentQuestion) return;
     isAnswerSubmitted = true;
+    lastSubmitTime = Date.now();
 
     disableQuestionInputs();
     const result = currentQuestion.validate();
@@ -506,7 +526,11 @@ document.addEventListener('DOMContentLoaded', () => {
           ? (currentLang === 'az' ? '🎯 Nəticələri Gör' : '🎯 View Results')
           : t('btn_next');
       }
-      btnNext.focus();
+      setTimeout(() => {
+        if (btnNext && !btnNext.classList.contains('hidden')) {
+          btnNext.focus();
+        }
+      }, 150);
     }
   }
 
@@ -514,10 +538,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnNext) {
     btnNext.addEventListener('click', () => {
+      if (Date.now() - lastSubmitTime < 350) return;
       currentQuestionIndex++;
       loadNextQuestion();
     });
   }
+
+  // Global Quiz Enter Key Controller (1st Enter = Submit, 2nd Enter = Next)
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (!screenQuiz || !screenQuiz.classList.contains('active')) return;
+    if (document.body.classList.contains('modal-open')) return;
+
+    if (!isAnswerSubmitted) {
+      if (btnSubmit && !btnSubmit.classList.contains('hidden') && !btnSubmit.disabled) {
+        e.preventDefault();
+        submitAnswer();
+      }
+    } else {
+      if (Date.now() - lastSubmitTime < 400) {
+        e.preventDefault();
+        return;
+      }
+      if (btnNext && !btnNext.classList.contains('hidden')) {
+        e.preventDefault();
+        btnNext.click();
+      }
+    }
+  });
 
   function endQuiz() {
     stopTimer();
@@ -526,6 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (resScore) resScore.textContent = score;
     if (resCorrect) resCorrect.textContent = correctCount;
     if (resWrong) resWrong.textContent = wrongCount;
+    if (resCorrectWrong) resCorrectWrong.textContent = `${correctCount} / ${wrongCount}`;
     if (resBestStreak) resBestStreak.textContent = `🔥 ${maxStreak}`;
 
     const totalAnswered = correctCount + wrongCount;
@@ -585,6 +634,62 @@ document.addEventListener('DOMContentLoaded', () => {
           openModal(document.getElementById('modal-scorecard'));
         }
       };
+    }
+
+    // Challenge Friend Button Handler
+    const btnChallengeFriend = document.getElementById('btn-challenge-friend');
+    if (btnChallengeFriend) {
+      btnChallengeFriend.onclick = () => {
+        const timeSec = typeof getTimeAttackDuration === 'function' ? getTimeAttackDuration() : 60;
+        let shareText = "";
+        if (selectedMode === 'timeattack') {
+          shareText = t('challenge_text_timeattack', timeSec, correctCount);
+        } else {
+          shareText = t('challenge_text_general', correctCount);
+        }
+
+        if (navigator.share) {
+          navigator.share({
+            title: 'VerbMaster Challenge',
+            text: shareText
+          }).then(() => {
+            if (typeof showToast === 'function') showToast(t('toast_challenge_copied'), 'success');
+          }).catch(() => {
+            copyTextToClipboard(shareText);
+          });
+        } else {
+          copyTextToClipboard(shareText);
+        }
+      };
+    }
+
+    function copyTextToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          if (typeof showToast === 'function') showToast(t('toast_challenge_copied'), 'success');
+        }).catch(() => {
+          fallbackCopyText(text);
+        });
+      } else {
+        fallbackCopyText(text);
+      }
+    }
+
+    function fallbackCopyText(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        if (typeof showToast === 'function') showToast(t('toast_challenge_copied'), 'success');
+      } catch (err) {
+        console.error('Fallback copy failed', err);
+      }
+      document.body.removeChild(textArea);
     }
 
     if (errorReviewSection && errorList) {

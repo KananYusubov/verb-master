@@ -8,11 +8,11 @@
 
   <!-- Immediate Theme Hydration to prevent FOUC / Color glitch on first load -->
   <script>
-    (function() {
+    (function () {
       try {
         var theme = localStorage.getItem('verb_master_theme') || 'dark';
         document.documentElement.setAttribute('data-theme', theme);
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
 
@@ -267,17 +267,19 @@
             <span class="res-stat-lbl" data-i18n="res_lbl_accuracy">Dəqiqlik</span>
           </div>
           <div class="res-stat-card">
-            <span class="res-stat-val" id="res-correct">0</span>
-            <span class="res-stat-lbl" data-i18n="res_lbl_correct">Doğru</span>
+            <span class="res-stat-val" id="res-correct_wrong">0 / 0</span>
+            <span class="res-stat-lbl" data-i18n="res_lbl_correct_wrong">Doğru \ Səhv</span>
           </div>
           <div class="res-stat-card">
-            <span class="res-stat-val" id="res-wrong">0</span>
-            <span class="res-stat-lbl" data-i18n="res_lbl_wrong">Səhv</span>
-          </div>
-          <div class="res-stat-card full-width">
             <span class="res-stat-val" id="res-best-streak">🔥 0</span>
             <span class="res-stat-lbl" data-i18n="res_lbl_streak">Maksimum Streak</span>
           </div>
+          <div class="res-stat-card full-width">
+            <button id="btn-challenge-friend" class="btn btn-accent">
+              <span data-i18n="btn_challenge_friend">🥊 Dostunu Çağır</span>
+            </button>
+          </div>
+
         </div>
 
         <!-- Error Review List Section -->
@@ -328,27 +330,31 @@
             <span class="faq-mode-icon">⏱️</span>
             <div class="faq-mode-body">
               <div class="faq-mode-name" data-i18n="faq_t6">Time Attack</div>
-              <div class="faq-mode-desc" data-i18n="faq_p6">60 saniyəlik sürətli sınaq. Hər doğru cavab +2s əlavə edir.</div>
+              <div class="faq-mode-desc" data-i18n="faq_p6">60 saniyəlik sürətli sınaq. Hər doğru cavab +2s əlavə edir.
+              </div>
             </div>
           </div>
           <div class="faq-mode-card faq-mode-mistakes">
             <span class="faq-mode-icon">⚠️</span>
             <div class="faq-mode-body">
               <div class="faq-mode-name" data-i18n="faq_t7">Səhvlərim</div>
-              <div class="faq-mode-desc" data-i18n="faq_p7">Keçmiş kvizlərdə səhv etdiyiniz feillər üzrə təkrar sınaq.</div>
+              <div class="faq-mode-desc" data-i18n="faq_p7">Keçmiş kvizlərdə səhv etdiyiniz feillər üzrə təkrar sınaq.
+              </div>
             </div>
           </div>
           <div class="faq-mode-card faq-mode-endless">
             <span class="faq-mode-icon">♾️</span>
             <div class="faq-mode-body">
               <div class="faq-mode-name" data-i18n="mode_endless">Sonsuz Rejim</div>
-              <div class="faq-mode-desc" data-i18n="faq_p_endless">İlk səhvə qədər davam edir. Streak rekordunuzu qırın.</div>
+              <div class="faq-mode-desc" data-i18n="faq_p_endless">İlk səhvə qədər davam edir. Streak rekordunuzu qırın.
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Part 2: Question Types as Accordion -->
-        <div class="faq-section-title margin-top-14" data-i18n="faq_section_types">📝 Hissə 2: Sual Növlərinin İzahı</div>
+        <div class="faq-section-title margin-top-14" data-i18n="faq_section_types">📝 Hissə 2: Sual Növlərinin İzahı
+        </div>
 
         <div class="faq-accordion">
           <div class="faq-acc-item">
@@ -371,7 +377,8 @@
             </button>
             <div class="faq-acc-body">
               <p data-i18n="faq_p2">Feilin 3 forması verilir və sıranın tam doğru olub-olmaması soruşulur.</p>
-              <div class="faq-example-badge" data-i18n="faq_ex2">Nümunə: "go - went - gone" → <strong>Düzgündür (True)</strong></div>
+              <div class="faq-example-badge" data-i18n="faq_ex2">Nümunə: "go - went - gone" → <strong>Düzgündür
+                  (True)</strong></div>
             </div>
           </div>
 
@@ -394,8 +401,10 @@
               <span class="faq-acc-arrow">›</span>
             </button>
             <div class="faq-acc-body">
-              <p data-i18n="faq_p4">Sözün V1, V2 və ya V3 formasını təyin edin. Eyni formaya malik feillər üçün 1 və ya bir neçə variant seçilməlidir.</p>
-              <div class="faq-example-badge" data-i18n="faq_ex4">Nümunə: "cut" → <strong>V1, V2, V3 (Hər üçü)</strong></div>
+              <p data-i18n="faq_p4">Sözün V1, V2 və ya V3 formasını təyin edin. Eyni formaya malik feillər üçün 1 və ya
+                bir neçə variant seçilməlidir.</p>
+              <div class="faq-example-badge" data-i18n="faq_ex4">Nümunə: "cut" → <strong>V1, V2, V3 (Hər üçü)</strong>
+              </div>
             </div>
           </div>
 
@@ -406,8 +415,10 @@
               <span class="faq-acc-arrow">›</span>
             </button>
             <div class="faq-acc-body">
-              <p data-i18n="faq_p5">Qarışıq verilmiş 3 sözü klikləyərək və ya sürükləyib buraxaraq (Drag &amp; Drop) düzgün sıraya salın.</p>
-              <div class="faq-example-badge" data-i18n="faq_ex5">Nümunə: "went - gone - go" → <strong>go - went - gone</strong></div>
+              <p data-i18n="faq_p5">Qarışıq verilmiş 3 sözü klikləyərək və ya sürükləyib buraxaraq (Drag &amp; Drop)
+                düzgün sıraya salın.</p>
+              <div class="faq-example-badge" data-i18n="faq_ex5">Nümunə: "went - gone - go" → <strong>go - went -
+                  gone</strong></div>
             </div>
           </div>
         </div>
@@ -416,7 +427,7 @@
     </div>
   </div>
 
-  <!-- Profile Nickname Modal -->
+  <!-- Profile  Modal -->
   <div id="modal-profile" class="modal-overlay hidden">
     <div class="modal-card glass-panel profile-modal-card">
       <div class="modal-header">
@@ -426,10 +437,28 @@
 
       <div class="profile-content">
         <div class="profile-section nickname-card">
-          <label for="input-nickname" class="profile-label" data-i18n="nickname_label">İstifadəçi Ləqəbi (Nickname)</label>
+          <label for="input-nickname" class="profile-label" data-i18n="nickname_label">İstifadəçi Ləqəbi
+            (Nickname)</label>
           <div class="nickname-input-group">
-            <input type="text" id="input-nickname" class="text-input" placeholder="Ləqəbinizi daxil edin..." data-i18n-placeholder="nickname_placeholder" maxlength="20">
+            <input type="text" id="input-nickname" class="text-input" placeholder="Ləqəbinizi daxil edin..."
+              data-i18n-placeholder="nickname_placeholder" maxlength="20">
             <button id="btn-save-nickname" class="save-nickname-btn" data-i18n="btn_save">Yadda saxla</button>
+          </div>
+        </div>
+
+        <!-- Data Backup Setting -->
+        <div class="setting-item setting-item-column">
+          <div class="setting-info">
+            <span class="setting-title" data-i18n="backup_setting_label">Məlumatların İdxalı / İxracı (JSON)</span>
+          </div>
+          <div class="setting-control backup-control">
+            <button id="btn-export-backup" class="setting-pill-btn backup-btn" data-i18n="btn_export_backup">
+              💾 İxrac Et
+            </button>
+            <button id="btn-import-backup" class="setting-pill-btn backup-btn" data-i18n="btn_import_backup">
+              📂 İdxal Et
+            </button>
+            <input type="file" id="input-import-backup" accept=".json" class="hidden">
           </div>
         </div>
       </div>
@@ -474,7 +503,8 @@
                   <rect y="13.33" width="30" height="6.67" fill="#009B00" />
                   <circle cx="13.5" cy="10" r="2.2" fill="#fff" />
                   <circle cx="14.2" cy="10" r="1.8" fill="#E00034" />
-                  <polygon points="17,10 17.6,9.2 17.2,10 18,10.3 17.3,10.6 17.4,11.4 16.8,10.8 16.2,11.2 16.5,10.4" fill="#fff" />
+                  <polygon points="17,10 17.6,9.2 17.2,10 18,10.3 17.3,10.6 17.4,11.4 16.8,10.8 16.2,11.2 16.5,10.4"
+                    fill="#fff" />
                 </svg>
               </span>
               <span>AZ</span>
@@ -501,6 +531,21 @@
             </button>
           </div>
         </div>
+
+        <!-- Quiz Timer Setting -->
+        <div class="setting-item">
+          <div class="setting-info">
+            <span class="setting-title" data-i18n="timer_setting_label">Time Attack Vaxtı</span>
+          </div>
+          <div class="setting-control timer-control">
+            <button class="setting-pill-btn timer-select-btn" data-timer="30">30s</button>
+            <button class="setting-pill-btn timer-select-btn active" data-timer="60">60s</button>
+            <button class="setting-pill-btn timer-select-btn" data-timer="90">90s</button>
+            <button class="setting-pill-btn timer-select-btn" data-timer="120">120s</button>
+          </div>
+        </div>
+
+
 
         <!-- FAQ Guide Button in Settings -->
         <button id="btn-faq-settings" class="btn btn-secondary btn-block settings-faq-btn">
@@ -552,7 +597,8 @@
         <div id="analytics-tab-history" class="analytics-tab-panel hidden">
           <div class="history-header">
             <h3 class="profile-subsection-title" data-i18n="history_title">📜 Son Kviz Tarixçəsi</h3>
-            <button id="btn-clear-history" class="text-btn danger-text-btn" data-i18n="btn_clear_history">Tarixçəni təmizlə</button>
+            <button id="btn-clear-history" class="text-btn danger-text-btn" data-i18n="btn_clear_history">Tarixçəni
+              təmizlə</button>
           </div>
           <div id="history-list" class="history-list">
             <!-- Dynamic history cards rendered via JS -->
@@ -563,7 +609,8 @@
         <div id="analytics-tab-mistakes" class="analytics-tab-panel hidden">
           <div class="mistakes-tab-header">
             <div id="mistakes-summary-text" class="mistakes-summary">Ümumi: <strong>0</strong> səhv feil</div>
-            <button id="btn-start-mistakes-from-modal" class="btn btn-primary btn-sm" data-i18n="btn_start_mistake_quiz">🎯 Səhvlərim Üzrə Testə Başla</button>
+            <button id="btn-start-mistakes-from-modal" class="btn btn-primary btn-sm"
+              data-i18n="btn_start_mistake_quiz">🎯 Səhvlərim Üzrə Testə Başla</button>
           </div>
           <div id="mistakes-tab-list" class="mistakes-tab-list">
             <!-- Dynamic mistake items rendered via JS -->
@@ -600,7 +647,8 @@
       <div class="dict-sticky-search-bar">
         <div class="dict-search-wrapper">
           <span class="dict-search-icon">🔍</span>
-          <input type="text" id="dict-search-input" class="dict-search-input" placeholder="Feil (V1, V2, V3) və ya tərcümə axtar..." data-i18n-placeholder="dict_search_placeholder">
+          <input type="text" id="dict-search-input" class="dict-search-input"
+            placeholder="Feil (V1, V2, V3) və ya tərcümə axtar..." data-i18n-placeholder="dict_search_placeholder">
         </div>
       </div>
 
@@ -640,8 +688,10 @@
       </div>
 
       <div class="scorecard-actions">
-        <button id="btn-download-scorecard" class="btn-scorecard-action btn-download-png" data-i18n="btn_download_image">💾 Yüklə (.png)</button>
-        <button id="btn-share-scorecard" class="btn-scorecard-action btn-share-native" data-i18n="btn_share_image">📲 Paylaş</button>
+        <button id="btn-download-scorecard" class="btn-scorecard-action btn-download-png"
+          data-i18n="btn_download_image">💾 Yüklə (.png)</button>
+        <button id="btn-share-scorecard" class="btn-scorecard-action btn-share-native" data-i18n="btn_share_image">📲
+          Paylaş</button>
       </div>
     </div>
   </div>
