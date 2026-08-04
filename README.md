@@ -6,43 +6,64 @@ A modern, mobile-first web application designed for learning, practicing, and te
 
 ## 🌟 Key Features
 
-* **📚 Extensive Verb Database:** 145+ English verbs (109 irregular, 36 regular verbs, including translations, alternative forms, and common distractor patterns).
-* **🎮 5 Interactive Question Types:**
-  1. **Type the Form:** Given a verb, type its V1, V2, or V3 form (*e.g., "write" $\rightarrow$ V2: `wrote`*).
-  2. **Check Sequence (True/False):** Verify if a 3-form verb sequence is correct (*includes distractors with fake `-ed` endings*).
-  3. **Fill Missing Form:** 2 out of 3 forms are provided; fill in the missing form (*e.g., "go - ___ - gone" $\rightarrow$ `went`*).
-  4. **Identify Form (Multi-Select):** Identify whether a word is V1, V2, or V3 (*select multiple for verbs with identical forms like "cut"*).
-  5. **Reorder 3 Forms (Drag & Drop):** Arrange 3 scrambled verb forms into correct V1 $\rightarrow$ V2 $\rightarrow$ V3 sequence via clicking or HTML5 Drag & Drop.
-* **🕹️ Game Modes:** `10`, `20`, `50`, `100` questions, `Full Database (145)`, and **♾️ Endless Mode (until first mistake)**.
-* **🔥 Score & Streak Engine:** Earn points and build streak multipliers with animated fire combos.
-* **📊 Results & Error Review:** Detailed post-quiz analytics including accuracy %, total score, max streak, and a review list of incorrect answers with correct forms.
-* **🌐 Multi-Language Support (AZ / EN):** Instant language switching between Azerbaijani and English with saved preferences.
-* **📱 Mobile-First Responsive Design:** Optimized touch targets, zero mobile zoom issues, and smooth glassmorphic UI.
-* **🎵 Web Audio API Sound Effects:** Built-in synthetic chimes and error buzzers without external audio assets.
-* **🌙 Dark & Light Themes:** Toggle between dark mode and light mode seamlessly.
+### 🎮 Learning & Game Modes
+* **📚 145+ Verbs Database:** Complete coverage of irregular and regular verbs with translations and distractor patterns.
+* **🎯 5 Question Types:** Type forms, sequence check (True/False), fill missing form, multi-select identification, and drag/click reordering.
+* **🕹️ Multiple Modes:** Quiz sets of 10, 20, 50, 100, Full Database, or **Endless Mode** (play until your first mistake).
+
+* **⏱️ Time Attack:** Fast-paced 60-second challenge with +2 seconds added for every correct answer.
+* **🧠 Smart Error Review (My Mistakes):** Automatically logs missed verbs into LocalStorage for focused practice until fully mastered.
+
+### 📊 Tools & Progress Tracking
+* **📖 Live Verb Dictionary:** Instant search and filter by verb forms, Azerbaijani translations, or mistake history.
+* **📈 Rich Analytics & History:** Detailed performance stats, streak combos, accuracy percentages, and a log of your last 50 quizzes.
+
+* **📷 High-Score Export:** Generate and download crisp Glassmorphism PNG score cards or share them natively.
+
+### 📱 UI & Experience
+* **🌐 Multi-Language (AZ / EN):** Seamlessly toggle between Azerbaijani and English languages.
+* **🌙 Dark & Light Themes:** Smooth theme switching with instant state hydration (no page flickering).
+
+* **📱 Mobile-First Design:** Fully responsive glassmorphic UI optimized for touch controls.
+* **🎵 Web Audio FX:** Native synthetic audio feedback for correct and wrong answers.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **HTML5:** Semantic layout, accessibility attributes, data-i18n internationalization.
-* **Vanilla CSS3:** CSS custom properties (variables), Glassmorphism, mobile-first Flexbox/Grid, and responsive animations.
-* **JavaScript (ES6+):** Pure client-side reactive quiz generator, state management, and Web Audio API.
-* **JSON:** Lightweight local database storing all verb metadata (`verbs.json`).
+* **Frontend:** Pure Vanilla HTML5, CSS3 (CSS Variables, Glassmorphism, Animations), Vanilla JavaScript (ES6+).
+* **Audio Engine:** Web Audio API for synthetic sound effects.
+* **Storage & Operations:** LocalStorage for user state and mistake tracking; Native HTML5 Canvas API for score card generation.
+* **Database:** Lightweight local `verbs.json`.
 
 ---
 
 ## 📂 Project Structure
 
-```
-├── index.html       # Primary HTML structure, layout & modals
-├── style.css        # Mobile-first design system, themes & animations
-├── app.js           # Quiz engine, multi-language controller & state management
-├── verbs.json       # Database of 145 English verbs
-├── favicon.svg      # Vector SVG favicon icon
-├── sual_novleri.md  # Question types specification document
-├── flow_plan.md     # User flow & architecture document
-└── README.md        # English project documentation
+The codebase utilizes a clean, modular hierarchy to separate logic, styles, and data:
+
+```text
+├── index.html       # Primary HTML layout, modals, and quiz screens
+├── style.css        # Main CSS entry point
+├── app.js           # Main controller and app lifecycle
+├── verbs.json       # Database of 145+ English verbs
+├── server.js        # Node.js local static server (Port 3008)
+├── css/             # Modular Styles
+│   ├── base.css     # Resets, variables, dark/light themes
+│   ├── header.css   # Navigation and grouped action buttons
+│   ├── quiz.css     # Quiz interface, timer, and result cards
+│   ├── modals.css   # Profile, settings, analytics, and dialog modals
+│   ├── dictionary.css # Dictionary UI, filters, and verb cards
+│   └── scorecard.css  # Canvas exporter modal styling
+└── js/              # Modular Scripts
+    ├── config.js    # Constants and global config
+    ├── i18n.js      # Internationalization (AZ/EN) engine
+    ├── storage.js   # LocalStorage management (stats, mistakes, history)
+    ├── audio.js     # Web Audio API sound generator
+    ├── questions.js # Question generators and validation logic
+    ├── modals.js    # Modal handlers and toast notification system
+    ├── dictionary.js# Dictionary search and filter logic
+    └── scorecard.js # HTML5 Canvas score card renderer & native share
 ```
 
 ---
